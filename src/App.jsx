@@ -105,7 +105,7 @@ export default function Portfolio() {
             <a href="#contact" style={{textDecoration: 'none', color: colors.text, fontSize: '14px'}}>Contact</a>
           </div>
           <button onClick={() => setIsDark(!isDark)} style={{border: 'none', background: 'none', cursor: 'pointer', fontSize: '18px', color: colors.accent}}>
-            {isDark ? '☀️' : '🌙'}
+            {isDark ? '☀' : '@'}
           </button>
         </div>
       </nav>
