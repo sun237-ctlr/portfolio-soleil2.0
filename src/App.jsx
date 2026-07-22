@@ -1,5 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { Github, Mail, ArrowRight, Menu, X, Download, ChevronDown, Sun, Moon, ExternalLink, Code2, Database, Zap, GitBranch, BarChart3, Heart, Send, CheckCircle, AlertCircle, Rocket, Lightbulb, Bot, Clipboard, Gamepad2, Award, Briefcase, MapPin } from 'lucide-react';
+
+// SVG Icons (remplaçant lucide-react)
+const SvgIcons = {
+  Github: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>,
+  Mail: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>,
+  ArrowRight: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>,
+  Menu: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>,
+  X: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>,
+  Download: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>,
+  ChevronDown: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><polyline points="6 9 12 15 18 9"></polyline></svg>,
+  Sun: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>,
+  Moon: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>,
+  ExternalLink: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>,
+  Code2: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>,
+  Database: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14a9 3 0 0 0 18 0V5"></path><path d="M3 12a9 3 0 0 0 18 0"></path></svg>,
+  Zap: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>,
+  GitBranch: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>,
+  BarChart3: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><line x1="3" y1="3" x2="3" y2="20"></line><line x1="21" y1="3" x2="21" y2="20"></line><line x1="8" y1="6" x2="8" y2="20"></line><line x1="13" y1="11" x2="13" y2="20"></line><line x1="18" y1="9" x2="18" y2="20"></line></svg>,
+  Heart: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>,
+  Send: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>,
+  CheckCircle: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>,
+  AlertCircle: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>,
+  Rocket: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><path d="M4.5 16.5c-1.5-1.5-2-3.5-1-5.5C4 7 8 4 12 4s8 3 8.5 6c1 2-1.5 4-3 5.5"></path><path d="M12 4v12"></path><path d="M8 12h8"></path><path d="M8 20h8"></path><circle cx="12" cy="12" r="1"></circle></svg>,
+  Lightbulb: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><path d="M9 18h6M9 18a6 6 0 0 1 6-6v-6a1 1 0 1 1 2 0v6a8 8 0 1 1-16 0v-6a1 1 0 1 1 2 0v6a6 6 0 0 1 6 6Z"></path></svg>,
+  Bot: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><rect x="3" y="3" width="18" height="18" rx="2"></rect><rect x="7" y="7" width="10" height="6"></rect><path d="M8 17v2M16 17v2M8 11a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM16 11a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"></path></svg>,
+  Clipboard: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1"></rect><path d="M9 12h6M9 16h6"></path></svg>,
+  Gamepad2: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><line x1="6" y1="12" x2="6" y2="12"></line><line x1="10" y1="9" x2="10" y2="15"></line><line x1="15" y1="9" x2="15" y2="15"></line><line x1="18" y1="12" x2="18" y2="12"></line><path d="M6 9a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3Z"></path></svg>,
+  Award: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><circle cx="12" cy="8" r="7"></circle><polyline points="8 14 12 17 16 14"></polyline><line x1="12" y1="17" x2="12" y2="23"></line><line x1="9" y1="23" x2="15" y2="23"></line></svg>,
+  Briefcase: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 7v-2a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"></path><line x1="12" y1="12" x2="12" y2="16"></line></svg>,
+  MapPin: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>,
+};
+
 
 export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -104,7 +135,7 @@ export default function Portfolio() {
   const LogoNS = () => (
     <div className="flex items-center gap-1.5 sm:gap-2 cursor-pointer hover:opacity-80 transition transform hover:scale-110 duration-300">
       <div className="text-lg sm:text-2xl font-serif font-bold" style={{ color: colors.accent }}>NS</div>
-      <Zap size={18} className="sm:w-5 sm:h-5 animate-pulse" style={{ color: colors.accent }} />
+      <SvgIcons.Zap size={18} className="sm:w-5 sm:h-5 animate-pulse" style={{ color: colors.accent }} />
     </div>
   );
 
@@ -131,7 +162,7 @@ export default function Portfolio() {
       description: 'Plateforme web révolutionnaire permettant aux citoyens de Douala de demander et suivre les documents administratifs municipaux.',
       details: 'Système d\'authentification sécurisé avec JWT, assistant IA conversationnel via Groq API, suivi des demandes en temps réel.',
       image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=1000&h=700&fit=crop',
-      icon: Briefcase,
+      icon: SvgIcons.Briefcase,
       tech: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Groq API', 'JWT', 'Tailwind CSS'],
       role: 'Full-Stack Developer',
       date: '2025 — 2026',
@@ -146,7 +177,7 @@ export default function Portfolio() {
       description: 'Application web de gestion des tâches collaborative, déployée en production sur Render.com.',
       details: 'Gestion des tâches en temps réel, système d\'assignation utilisateurs, suivi de progression, interface responsive.',
       image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1000&h=700&fit=crop',
-      icon: Clipboard,
+      icon: SvgIcons.Clipboard,
       tech: ['Flask', 'PostgreSQL', 'Python', 'SQLAlchemy', 'Render', 'Jinja2'],
       role: 'Full-Stack Developer',
       date: 'Jan — Avr 2026',
@@ -161,7 +192,7 @@ export default function Portfolio() {
       description: 'Plateforme web multi-jeux développée en React, regroupant sept jeux classiques.',
       details: 'Pong, Snake, 2048, Flappy Bird, Tic Tac Toe et plus. Composants React avancés, algorithmes de jeu, Canvas API.',
       image: 'https://images.unsplash.com/photo-1533627519674-bae3b7a84b57?w=1000&h=700&fit=crop',
-      icon: Gamepad2,
+      icon: SvgIcons.Gamepad2,
       tech: ['React', 'Vite', 'JavaScript', 'Canvas API', 'Lucide React', 'Tailwind CSS'],
       role: 'Frontend Developer',
       date: '2026',
@@ -176,7 +207,7 @@ export default function Portfolio() {
       description: 'Exploration d\'une architecture complète d\'IA locale, structurée en deux phases.',
       details: 'Containerisation Docker, Ollama pour exécuter LLMs localement, API FastAPI, architecture RAG.',
       image: 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=1000&h=700&fit=crop',
-      icon: Bot,
+      icon: SvgIcons.Bot,
       tech: ['Docker', 'Ollama', 'FastAPI', 'Python', 'RAG', 'LLMs', 'Linux'],
       role: 'Backend/Infrastructure',
       date: '2026',
@@ -186,19 +217,19 @@ export default function Portfolio() {
   ];
 
   const expertiseAreas = [
-    { id: 1, title: 'Frontend Development', icon: Code2, description: 'Création d\'interfaces modernes et responsives avec React.', skills: [{ name: 'React', level: 95 }, { name: 'Vite', level: 90 }, { name: 'Tailwind CSS', level: 95 }, { name: 'JavaScript', level: 92 }, { name: 'HTML/CSS', level: 98 }] },
-    { id: 2, title: 'Backend Development', icon: Database, description: 'Architecture backend robuste avec Node.js et Python.', skills: [{ name: 'Node.js', level: 90 }, { name: 'Express', level: 88 }, { name: 'Flask', level: 85 }, { name: 'Python', level: 90 }, { name: 'FastAPI', level: 85 }] },
-    { id: 3, title: 'Database & Data', icon: BarChart3, description: 'Gestion optimale des bases de données et des données.', skills: [{ name: 'PostgreSQL', level: 92 }, { name: 'SQL', level: 94 }, { name: 'Prisma ORM', level: 88 }, { name: 'Database Design', level: 90 }, { name: 'Data Modeling', level: 85 }] },
-    { id: 4, title: 'DevOps & Infrastructure', icon: Zap, description: 'Déploiement, containerisation et gestion d\'infrastructure.', skills: [{ name: 'Docker', level: 85 }, { name: 'Linux', level: 88 }, { name: 'Git', level: 95 }, { name: 'Render', level: 90 }, { name: 'Vercel', level: 92 }] },
-    { id: 5, title: 'AI & Machine Learning', icon: Bot, description: 'Intégration d\'IA dans les applications modernes.', skills: [{ name: 'Groq API', level: 85 }, { name: 'Ollama', level: 82 }, { name: 'RAG Architecture', level: 80 }, { name: 'LLM Integration', level: 83 }, { name: 'Prompt Engineering', level: 85 }] },
-    { id: 6, title: 'Problem Solving', icon: Award, description: 'Approche itérative et réfléchie pour résoudre les problèmes.', skills: [{ name: 'Architecture Design', level: 88 }, { name: 'Performance', level: 90 }, { name: 'Security', level: 85 }, { name: 'Code Quality', level: 92 }, { name: 'Testing', level: 85 }] }
+    { id: 1, title: 'Frontend Development', icon: SvgIcons.Code2, description: 'Création d\'interfaces modernes et responsives avec React.', skills: [{ name: 'React', level: 95 }, { name: 'Vite', level: 90 }, { name: 'Tailwind CSS', level: 95 }, { name: 'JavaScript', level: 92 }, { name: 'HTML/CSS', level: 98 }] },
+    { id: 2, title: 'Backend Development', icon: SvgIcons.Database, description: 'Architecture backend robuste avec Node.js et Python.', skills: [{ name: 'Node.js', level: 90 }, { name: 'Express', level: 88 }, { name: 'Flask', level: 85 }, { name: 'Python', level: 90 }, { name: 'FastAPI', level: 85 }] },
+    { id: 3, title: 'Database & Data', icon: SvgIcons.BarChart3, description: 'Gestion optimale des bases de données et des données.', skills: [{ name: 'PostgreSQL', level: 92 }, { name: 'SQL', level: 94 }, { name: 'Prisma ORM', level: 88 }, { name: 'Database Design', level: 90 }, { name: 'Data Modeling', level: 85 }] },
+    { id: 4, title: 'DevOps & Infrastructure', icon: SvgIcons.Zap, description: 'Déploiement, containerisation et gestion d\'infrastructure.', skills: [{ name: 'Docker', level: 85 }, { name: 'Linux', level: 88 }, { name: 'Git', level: 95 }, { name: 'Render', level: 90 }, { name: 'Vercel', level: 92 }] },
+    { id: 5, title: 'AI & Machine Learning', icon: SvgIcons.Bot, description: 'Intégration d\'IA dans les applications modernes.', skills: [{ name: 'Groq API', level: 85 }, { name: 'Ollama', level: 82 }, { name: 'RAG Architecture', level: 80 }, { name: 'LLM Integration', level: 83 }, { name: 'Prompt Engineering', level: 85 }] },
+    { id: 6, title: 'Problem Solving', icon: SvgIcons.Award, description: 'Approche itérative et réfléchie pour résoudre les problèmes.', skills: [{ name: 'Architecture Design', level: 88 }, { name: 'Performance', level: 90 }, { name: 'Security', level: 85 }, { name: 'Code Quality', level: 92 }, { name: 'Testing', level: 85 }] }
   ];
 
   const collaborationTypes = [
-    { icon: Rocket, title: 'Projets Full-Stack', description: 'Développement de applications web complètes.' },
-    { icon: Lightbulb, title: 'Consultation Technique', description: 'Conseils sur architecture et stack technologique.' },
-    { icon: Bot, title: 'Intégration IA', description: 'Implémentation de solutions IA et RAG.' },
-    { icon: Briefcase, title: 'Freelance & Contract', description: 'Travaux ponctuels et missions à court terme.' }
+    { icon: SvgIcons.Rocket, title: 'Projets Full-Stack', description: 'Développement de applications web complètes.' },
+    { icon: SvgIcons.Lightbulb, title: 'Consultation Technique', description: 'Conseils sur architecture et stack technologique.' },
+    { icon: SvgIcons.Bot, title: 'Intégration IA', description: 'Implémentation de solutions IA et RAG.' },
+    { icon: SvgIcons.Briefcase, title: 'Freelance & Contract', description: 'Travaux ponctuels et missions à court terme.' }
   ];
 
   const timeline = [
@@ -260,7 +291,7 @@ export default function Portfolio() {
               className="inline-flex items-center gap-1 xl:gap-2 px-3 xl:px-5 py-2 rounded-full border font-light hover:opacity-80 transition text-xs xl:text-sm transform hover:scale-110 duration-300"
               style={{ borderColor: colors.accent, color: colors.text }}
             >
-              <Download size={14} /> <span className="hidden sm:inline">CV</span>
+              <SvgIcons.Download size={14} /> <span className="hidden sm:inline">CV</span>
             </a>
 
             <button 
@@ -268,7 +299,7 @@ export default function Portfolio() {
               className="inline-flex items-center justify-center w-9 h-9 xl:w-10 xl:h-10 rounded-full border transition hover:opacity-80 transform hover:rotate-180 duration-500"
               style={{ borderColor: colors.accent, color: colors.text }}
             >
-              {isDark ? <Sun size={16} className="xl:w-5 xl:h-5" /> : <Moon size={16} className="xl:w-5 xl:h-5" />}
+              {isDark ? <SvgIcons.Sun size={16} className="xl:w-5 xl:h-5" /> : <SvgIcons.Moon size={16} className="xl:w-5 xl:h-5" />}
             </button>
           </div>
 
@@ -278,14 +309,14 @@ export default function Portfolio() {
               className="inline-flex items-center justify-center w-9 h-9 rounded-full border transition hover:opacity-80 transform hover:rotate-180 duration-500"
               style={{ borderColor: colors.accent, color: colors.text }}
             >
-              {isDark ? <Sun size={16} /> : <Moon size={16} />}
+              {isDark ? <SvgIcons.Sun size={16} /> : <SvgIcons.Moon size={16} />}
             </button>
             <button 
               onClick={() => setMenuOpen(!menuOpen)}
               className="inline-flex items-center justify-center w-9 h-9 transform hover:scale-110 duration-300"
               style={{ color: colors.text }}
             >
-              {menuOpen ? <X size={20} /> : <Menu size={20} />}
+              {menuOpen ? <SvgIcons.X size={20} /> : <SvgIcons.Menu size={20} />}
             </button>
           </div>
         </div>
@@ -376,7 +407,7 @@ export default function Portfolio() {
               }}
             >
               Voir mes projets 
-              <ArrowRight size={16} className="group-hover:translate-x-3 transition duration-300" />
+              <SvgIcons.ArrowRight size={16} className="group-hover:translate-x-3 transition duration-300" />
             </a>
             <a 
               href="#contact" 
@@ -387,7 +418,7 @@ export default function Portfolio() {
                 color: colors.text
               }}
             >
-              <Mail size={16} /> Démarrer
+              <SvgIcons.Mail size={16} /> Démarrer
             </a>
           </div>
 
@@ -410,7 +441,7 @@ export default function Portfolio() {
         </div>
 
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 cursor-pointer hover:opacity-60 transition" style={{ animation: 'bounce 2s infinite' }}>
-          <ChevronDown size={28} className="sm:w-8 sm:h-8" style={{ color: colors.accent, opacity: 0.6 }} />
+          <SvgIcons.ChevronDown size={28} className="sm:w-8 sm:h-8" style={{ color: colors.accent, opacity: 0.6 }} />
         </div>
       </section>
 
@@ -509,14 +540,14 @@ export default function Portfolio() {
                           className="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-lg border transition hover:scale-110 transform duration-300 text-xs sm:text-sm"
                           style={{ borderColor: colors.accent, color: colors.text }}
                         >
-                          <Github size={14} className="sm:w-4 sm:h-4" /> Code
+                          <SvgIcons.Github size={14} className="sm:w-4 sm:h-4" /> Code
                         </a>
                         <a 
                           href={project.demo}
                           className="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition hover:scale-110 transform duration-300 shadow-md hover:shadow-xl text-xs sm:text-sm"
                           style={{ backgroundColor: colors.accent, color: isDark ? '#1a1a1a' : 'white' }}
                         >
-                          <ExternalLink size={14} className="sm:w-4 sm:h-4" /> Démo
+                          <SvgIcons.ExternalLink size={14} className="sm:w-4 sm:h-4" /> Démo
                         </a>
                       </div>
                     </div>
@@ -623,7 +654,7 @@ export default function Portfolio() {
               </div>
               <div className="transform hover:translate-x-2 transition duration-300">
                 <div className="flex items-center gap-2 mb-1">
-                  <Zap size={16} style={{ color: colors.accent }} />
+                  <SvgIcons.Zap size={16} style={{ color: colors.accent }} />
                   <p className="text-xl sm:text-2xl font-serif font-light transform hover:scale-110 transition duration-300" style={{ color: colors.accent }}>Open</p>
                 </div>
                 <p className="text-xs uppercase tracking-widest font-light opacity-50">À la collaboration</p>
@@ -655,7 +686,7 @@ export default function Portfolio() {
               }}
             >
               <div className="flex items-start gap-3 mb-3 sm:mb-4">
-                <Heart size={18} className="sm:w-5 sm:h-5" style={{ color: colors.accent, marginTop: '2px', animation: 'heartbeat 1.5s infinite' }} />
+                <SvgIcons.Heart size={18} className="sm:w-5 sm:h-5" style={{ color: colors.accent, marginTop: '2px', animation: 'heartbeat 1.5s infinite' }} />
                 <p className="text-sm sm:text-lg font-serif font-light italic" style={{ color: colors.accent }}>
                   "Le code n'est pas juste de la logique, c'est de l'art. Chaque projet est une opportunité de créer quelque chose de beau."
                 </p>
@@ -768,7 +799,7 @@ export default function Portfolio() {
               <div className="space-y-6 sm:space-y-8">
                 <div className="pb-6 sm:pb-8 border-b transform hover:translate-x-2 transition duration-300" style={{ borderColor: colors.border }}>
                   <div className="flex items-center gap-2 mb-2 sm:mb-3">
-                    <Mail size={16} style={{ color: colors.accent }} />
+                    <SvgIcons.Mail size={16} style={{ color: colors.accent }} />
                     <p className="text-xs uppercase tracking-widest font-light opacity-60">Email</p>
                   </div>
                   <a 
@@ -781,7 +812,7 @@ export default function Portfolio() {
                 </div>
                 <div className="pb-6 sm:pb-8 border-b transform hover:translate-x-2 transition duration-300" style={{ borderColor: colors.border }}>
                   <div className="flex items-center gap-2 mb-2 sm:mb-3">
-                    <Github size={16} style={{ color: colors.accent }} />
+                    <SvgIcons.Github size={16} style={{ color: colors.accent }} />
                     <p className="text-xs uppercase tracking-widest font-light opacity-60">GitHub</p>
                   </div>
                   <a 
@@ -921,9 +952,9 @@ export default function Portfolio() {
                     }}
                   >
                     {formStatus.type === 'success' ? (
-                      <CheckCircle size={16} className="sm:w-5 sm:h-5 flex-shrink-0" style={{ color: colors.accent, marginTop: '2px' }} />
+                      <SvgIcons.CheckCircle size={16} className="sm:w-5 sm:h-5 flex-shrink-0" style={{ color: colors.accent, marginTop: '2px' }} />
                     ) : (
-                      <AlertCircle size={16} className="sm:w-5 sm:h-5 flex-shrink-0" style={{ color: colors.accent, marginTop: '2px' }} />
+                      <SvgIcons.AlertCircle size={16} className="sm:w-5 sm:h-5 flex-shrink-0" style={{ color: colors.accent, marginTop: '2px' }} />
                     )}
                     <p className="text-xs sm:text-sm font-light" style={{ color: colors.text }}>
                       {formStatus.message}
@@ -941,7 +972,7 @@ export default function Portfolio() {
                   }}
                 >
                   {isSubmitting ? 'Envoi...' : 'Envoyer'}
-                  {!isSubmitting && <Send size={14} className="sm:w-4 sm:h-4" />}
+                  {!isSubmitting && <SvgIcons.Send size={14} className="sm:w-4 sm:h-4" />}
                 </button>
               </form>
 
