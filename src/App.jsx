@@ -232,8 +232,8 @@ export default function Portfolio() {
   ];
 
   const timeline = [
-    { year: '2023-2024', title: 'Baccalauréat C', description: 'Baccalauréat de mathématiques et des sciences physiques au cameroun.' },
-    { year: '2025', title: 'Début du DUT en Génie Informatique', description: 'Commencé mon parcours académique à l'IUT de Douala.' },
+    { year: '2024', title: 'Baccalaureat C', description: 'Baccalauréat des mathématiques et sciences physiques.' },
+    { year: '2024', title: 'Début du DUT en Génie Informatique', description: 'Commencé mon parcours académique à l\'IUT de Douala.' },
     { year: 'Jan 2026', title: 'Stage à DIGIPLUS Consulting', description: 'Développement de TaskFlow Pro en production.' },
     { year: '2025-2026', title: 'Projet de fin d\'études', description: 'Construction d\'e-Mairie Douala avec authentification et IA.' }
   ];
@@ -630,7 +630,7 @@ export default function Portfolio() {
               }}
             >
               <img 
-                src="https://imgur.com/a/ge7ILqA"
+                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&h=600&fit=crop"
                 alt="Nadia Soleil"
                 className="w-full h-full object-cover"
               />
