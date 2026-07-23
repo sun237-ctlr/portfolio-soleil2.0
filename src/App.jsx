@@ -631,7 +631,7 @@ export default function Portfolio() {
               }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&h=600&fit=crop"
+                src="https://imgur.com/a/ge7ILqA
                 alt="Nadia Soleil"
                 className="w-full h-full object-cover"
               />
