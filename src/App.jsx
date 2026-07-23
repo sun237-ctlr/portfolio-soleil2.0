@@ -803,11 +803,11 @@ export default function Portfolio() {
                     <p className="text-xs uppercase tracking-widest font-light opacity-60">Email</p>
                   </div>
                   <a 
-                    href="mailto:contact@soleil.dev"
+                    href="mailto:www.soleilnzepang@gmail.com"
                     className="text-base sm:text-lg font-light hover:opacity-60 transition transform hover:scale-110 duration-300"
                     style={{ color: colors.accent }}
                   >
-                    contact@soleil.dev
+                    www.soleilnzepang@gmail.com
                   </a>
                 </div>
                 <div className="pb-6 sm:pb-8 border-b transform hover:translate-x-2 transition duration-300" style={{ borderColor: colors.border }}>
